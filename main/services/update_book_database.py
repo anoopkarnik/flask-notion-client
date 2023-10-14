@@ -12,7 +12,7 @@ def update_books():
     notion_database_url = os.path.join(notion_url,'databases')
     book_database_id = os.environ.get('BOOKS_DB_ID')
     notion_book_database_url = os.path.join(notion_database_url,book_database_id,"query")
-    token = os.environ.get('TOKEN')
+    token = os.environ.get('NOTION_TOKEN')
     # data = json.dumps({
     #     "filter": {
     #         "property": "Summary",
@@ -59,7 +59,7 @@ def get_google_books_details(title):
 def update_book_properties(id,book_details):
     notion_url = os.environ.get('NOTION_URL')
     notion_page_url = os.path.join(notion_url,'pages',id)
-    token = os.environ.get('TOKEN')
+    token = os.environ.get('NOTION_TOKEN')
     headers = {
         "Authorization": f"Bearer {token}",
         "Notion-Version":"2022-02-22",
