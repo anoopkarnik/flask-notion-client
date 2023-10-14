@@ -1,18 +1,31 @@
 import requests
 import os
 import json
+import datetime
+import pytz  # This library helps with time zone handling
 
 def update_books():
+    gmt_timezone = pytz.timezone('GMT')
+    current_time_gmt = datetime.datetime.now(gmt_timezone)
+    ten_minutes_ago_gmt = current_time_gmt - datetime.timedelta(minutes=10)
     notion_url = os.environ.get('NOTION_URL')
     notion_database_url = os.path.join(notion_url,'databases')
     book_database_id = os.environ.get('BOOKS_DB_ID')
     notion_book_database_url = os.path.join(notion_database_url,book_database_id,"query")
     token = os.environ.get('TOKEN')
+    # data = json.dumps({
+    #     "filter": {
+    #         "property": "Summary",
+    #         "rich_text": {
+    #             "is_empty": True
+    #         }
+    #     }
+    # })
     data = json.dumps({
         "filter": {
-            "property": "Summary",
-            "rich_text": {
-                "is_empty": True
+            "timestamp": "last_edited_time",
+            "last_edited_time": {
+                "on_or_after": ten_minutes_ago_gmt.strftime("%Y-%m-%dT%H:%M:%SZ")
             }
         }
     })
