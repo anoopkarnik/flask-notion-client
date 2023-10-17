@@ -101,6 +101,3 @@ def update_movie_tvshow_properties(id,type,movie_tvshow_details):
             properties['Genre']['multi_select'].append({'name':genre['name']})
     body = json.dumps({'properties':properties})
     response = requests.request('PATCH',notion_page_url,headers=headers,data=body)
-    
-
-
